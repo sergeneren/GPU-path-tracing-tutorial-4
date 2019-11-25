@@ -13,7 +13,7 @@
 #include "cutil_math.h"  // required for float3
 
 #define STACK_SIZE  64  // Size of the traversal stack in local memory.
-#define M_PI 3.1415926535897932384626422832795028841971f
+//#define M_PI 3.1415926535897932384626422832795028841971f
 #define TWO_PI 6.2831853071795864769252867665590057683943f
 #define DYNAMIC_FETCH_THRESHOLD 20          // If fewer than this active, fetch new rays
 #define samps 1

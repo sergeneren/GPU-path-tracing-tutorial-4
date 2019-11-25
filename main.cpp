@@ -113,8 +113,8 @@ void disp(void)
 
 	// copy the CPU camera to a GPU camera
 	cudaMemcpy(cudaRendercam, hostRendercam, sizeof(Camera), cudaMemcpyHostToDevice);
+	cudaDeviceSynchronize();
 
-	cudaThreadSynchronize();
 	cudaGLMapBufferObject((void**)&finaloutputbuffer, vbo); // maps a buffer object for access by CUDA
 
 	glClear(GL_COLOR_BUFFER_BIT); //clear all pixels
@@ -126,7 +126,7 @@ void disp(void)
 	cudaRender(cudaNodePtr, cudaTriWoopPtr, cudaTriDebugPtr, cudaTriIndicesPtr, finaloutputbuffer,
 		accumulatebuffer, gpuHDRenv, framenumber, hashedframes, nodeSize, leafnode_count, triangle_count, cudaRendercam);
 	
-	cudaThreadSynchronize();
+	cudaDeviceSynchronize();
 	cudaGLUnmapBufferObject(vbo);
 	glFlush();
   glFinish();
@@ -367,8 +367,10 @@ int main(int argc, char** argv){
 	glutInitWindowSize(scrwidth, scrheight); // specify the initial window size
 	glutCreateWindow("MatchingSocks, CUDA path tracer using SplitBVH"); // create the window and set title
 
-  cudaGLSetGLDevice(0);
-  cudaSetDevice(0);
+	int cuda_devices[1];
+	unsigned int num_cuda_devices;
+	cudaGLGetDevices(&num_cuda_devices, cuda_devices, 1, cudaGLDeviceListAll);
+	cudaSetDevice(cuda_devices[0]);
 
 	// initialise OpenGL:
 	glClearColor(0.0, 0.0, 0.0, 0.0);
