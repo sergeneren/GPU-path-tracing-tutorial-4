@@ -1,17 +1,12 @@
-project(GPU-path-tracing-tutorial-4)
+project(GPU-path-tracing-tutorial-4 LANGUAGES CXX CUDA)
 
 cmake_minimum_required(VERSION 2.8)
 
-find_package(CUDA REQUIRED)
-find_package(GLEW REQUIRED)
-find_package(GLUT REQUIRED)
-find_package(OpenGL REQUIRED)
+set(_VCPKG_INCLUDE_DIR "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include/")
 
-
-include_directories(${CUDA_INCLUDE_DIRS})
-include_directories(${GLEW_INCLUDE_DIR})
-include_directories(${GLUT_INCLUDE_DIR})
-include_directories(${OPENGL_INCLUDE_DIR})
+find_package(glew REQUIRED)
+find_package(glut REQUIRED)
+find_package(opengl REQUIRED)
 
 set(HEADERS
     Array.h
@@ -46,11 +41,8 @@ set(SOURCES
     Util.cpp
 )
 
-cuda_add_executable(tutorial4 ${HEADERS} ${SOURCES})
+add_executable(tutorial4 ${HEADERS} ${SOURCES})
 
-target_link_libraries(tutorial4
-    ${CUDA_LIBRARIES}
-    ${GLEW_LIBRARIES}
-    ${GLUT_LIBRARIES}
-    ${OPENGL_LIBRARIES}
-)
+target_link_libraries(tutorial4 cuda cudart)
+
+include_directories(${_VCPKG_INCLUDE_DIR})
