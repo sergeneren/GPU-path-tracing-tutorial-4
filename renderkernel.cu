@@ -328,7 +328,7 @@ __device__ void DEBUGintersectBVHandTriangles(const float4 rayorig, const float4
 			asm("{\n"
 				"   .reg .pred p;               \n"
 				"setp.ge.s32        p, %1, 0;   \n"
-				"vote.ballot.b32    %0,p;       \n"
+				"vote.sync.ballot.b32    %0,p,0xffffffff;       \n"
 			"}"
 				: "=r"(mask)
 				: "r"(leafAddr));
@@ -590,9 +590,9 @@ __device__ void intersectBVHandTriangles(const float4 rayorig, const float4 rayd
 			unsigned int mask; // replaces searchingLeaf
 
 			asm("{\n"
-				"   .reg .pred p;               \n"
-				"setp.ge.s32        p, %1, 0;   \n"
-				"vote.ballot.b32    %0,p;       \n"
+				"   .reg .pred p;					\n"
+				"setp.ge.s32        p, %1, 0;		\n"
+				"vote.sync.ballot.b32    %0,p,0xffffffff;      \n"
 				"}"
 				: "=r"(mask)
 				: "r"(leafAddr));

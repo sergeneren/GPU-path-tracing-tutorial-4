@@ -7,6 +7,8 @@ Info:		Load HDR image and convert to a set of float32 RGB triplet.
 from http://www.flipcode.com/archives/HDR_Image_Reader.shtml
 ************************************************************************************/
 
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "HDRloader.h"
 
 #include <math.h>
