@@ -45,7 +45,7 @@ namespace enums {
 using namespace enums;
 
 // Rescale input objects to have this size...
-const float MaxCoordAfterRescale = 1.2f;
+const float MaxCoordAfterRescale = 20.00f;
 
 // if some file cannot be found, panic and exit
 void panic(const char *fmt, ...)
@@ -633,8 +633,8 @@ float processgeo(){
 	std::cout << "\nCentering and scaling vertices..." << std::endl;
 	for (unsigned i = 0; i<verticesNo; i++) {
 		vertices[i] -= origCenter;
-		//vertices[i].y += origCenter.y;
-		//vertices[i] *= (MaxCoordAfterRescale / maxi);
+		vertices[i].y += origCenter.y;
+		vertices[i] *= (MaxCoordAfterRescale / maxi);
 		vertices[i] *= 0.1; // 0.25
 	}
 
